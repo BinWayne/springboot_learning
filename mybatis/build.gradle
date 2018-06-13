@@ -1,0 +1,47 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+group = 'com.ibm.mybatis'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+
+	compile('mysql:mysql-connector-java')
+	compile('com.alibaba:druid:1.0.27')
+	compile('com.github.pagehelper:pagehelper:4.1.6')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+war {
+	baseName = "mybatis"
+	version =  '0.1'
+	dependencies {
+//       providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat:1.5.2.RELEASE'
+		exclude 'javax.servlet:javax.servlet-api:3.1.0'
+	}
+
+}
