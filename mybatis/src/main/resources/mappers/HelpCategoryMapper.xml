@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ibm.mybatis.mybatis.mapper.HelpCategoryMapper">
+    <resultMap id="BaseResultMap" type="com.ibm.mybatis.mybatis.entity.HelpCategory">
+        <id column="helpCategoryId" jdbcType="SMALLINT" property="helpCategoryId" />
+        <result column="name" jdbcType="CHAR" property="name" />
+        <result column="parentCategoryId" jdbcType="SMALLINT" property="parentCategoryId" />
+        <result column="url" jdbcType="CHAR" property="url" />
+    </resultMap>
+    <select id="selectList" resultMap="BaseResultMap">
+        select helpCategoryId, name, parentCategoryId, url from help_category
+    </select>
+</mapper>
+
