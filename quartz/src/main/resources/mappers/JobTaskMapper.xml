@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ibm.dsw.pricepub.admin.mapper.JobTaskMapper">
+    <resultMap id="JobResultMap" type="com.ibm.dsw.pricepub.admin.entity.JobTask">
+        <id column="JOB_ID" jdbcType="INTEGER" property="jobID" />
+        <result column="JOB_TITLE" jdbcType="VARCHAR" property="jobTitle" />
+        <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate" />
+        <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate" />
+        <result column="JOB_FRQNCY" jdbcType="CHAR" property="jobFreq" />
+        <result column="JOB_DTL_DISTRIBTN_LIST_ID" jdbcType="INTEGER" property="jobDtl" />
+        <result column="JOB_SUCCSS_DISTRIBTN_LIST_ID" jdbcType="INTEGER" property="jobSucc" />
+        <result column="JOB_FAIL_DISTRIBTN_LIST_ID" jdbcType="INTEGER" property="jobFail" />
+        <result column="ADD_BY_USER_NAME" jdbcType="VARCHAR" property="addByUserName" />
+        <result column="MOD_BY_USER_NAME" jdbcType="VARCHAR" property="modByUserName" />
+        <result column="ADD_DATE" jdbcType="TIMESTAMP" property="addDate" />
+        <result column="MOD_DATE" jdbcType="TIMESTAMP" property="modDate" />
+        <result column="INACT_FLAG" jdbcType="SMALLINT" property="inactFlag" />
+        <result column="DELETE_FLAG" jdbcType="SMALLINT" property="deleteFlag" />
+
+    </resultMap>
+    <select id="selectList" resultMap="JobResultMap">
+        SELECT JOB_ID, JOB_TITLE, START_DATE, END_DATE, JOB_FRQNCY, JOB_DTL_DISTRIBTN_LIST_ID, JOB_SUCCSS_DISTRIBTN_LIST_ID, JOB_FAIL_DISTRIBTN_LIST_ID, INACT_FLAG, ADD_BY_USER_NAME, ADD_DATE, MOD_BY_USER_NAME, MOD_DATE, DELETE_FLAG
+        FROM EBIZ1.PRIC_PUBLSHG_JOB_CONFIGRTN_HDR
+
+    </select>
+    <select id="selectByJobID" resultMap="JobResultMap">
+
+        SELECT JOB_ID, JOB_TITLE, START_DATE, END_DATE, JOB_FRQNCY, JOB_DTL_DISTRIBTN_LIST_ID, JOB_SUCCSS_DISTRIBTN_LIST_ID, JOB_FAIL_DISTRIBTN_LIST_ID, INACT_FLAG, ADD_BY_USER_NAME, ADD_DATE, MOD_BY_USER_NAME, MOD_DATE, DELETE_FLAG
+        FROM EBIZ1.PRIC_PUBLSHG_JOB_CONFIGRTN_HDR
+        WHERE JOB_ID=#{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from EBIZ1.PRIC_PUBLSHG_JOB_CONFIGRTN_HDR
+        where JOB_ID = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateByPrimaryKey" parameterType="com.ibm.dsw.pricepub.admin.entity.JobTask">
+        update EBIZ1.PRIC_PUBLSHG_JOB_CONFIGRTN_HDR
+        set  INACT_FLAG = #{inactFlag,jdbcType=SMALLINT}
+
+        where JOB_ID = #{jobID,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insert" parameterType="com.ibm.dsw.pricepub.admin.entity.JobTask">
+        <selectKey resultType="Integer" order="BEFORE" keyProperty="jobID">
+            VALUES NEXTVAL FOR EBIZ1.SEQ_PP_JOB_ID
+        </selectKey>
+        INSERT INTO EBIZ1.PRIC_PUBLSHG_JOB_CONFIGRTN_HDR
+        (JOB_ID,
+        JOB_TITLE,
+        START_DATE,
+        END_DATE,
+        JOB_FRQNCY,
+        ADD_BY_USER_NAME,
+        MOD_BY_USER_NAME,
+        ADD_DATE,
+        MOD_DATE,
+        INACT_FLAG,
+        DELETE_FLAG,
+        JOB_DTL_DISTRIBTN_LIST_ID,
+        JOB_SUCCSS_DISTRIBTN_LIST_ID,
+        JOB_FAIL_DISTRIBTN_LIST_ID)
+        VALUES(
+        #{jobID,jdbcType=INTEGER},
+        #{jobTitle,jdbcType=VARCHAR},
+        #{startDate,jdbcType=TIMESTAMP},
+        #{endDate,jdbcType=TIMESTAMP},
+        #{jobFreq,jdbcType=CHAR},
+        #{addByUserName,jdbcType=VARCHAR},
+        #{modByUserName,jdbcType=VARCHAR},
+        #{addDate,jdbcType=TIMESTAMP},
+        #{modDate,jdbcType=TIMESTAMP},
+        #{inactFlag,jdbcType=SMALLINT},
+        #{deleteFlag,jdbcType=SMALLINT},
+        #{jobDtl,jdbcType=INTEGER},
+        #{jobSucc,jdbcType=INTEGER},
+        #{jobFail,jdbcType=INTEGER}
+        )
+
+    </insert>
+</mapper>

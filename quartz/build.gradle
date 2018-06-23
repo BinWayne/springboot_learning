@@ -1,0 +1,75 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+        //1.5.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.ibm.dsw.pricepub'
+version = '1.0'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+	mavenCentral()
+}
+configurations {
+	providedRuntime
+}
+
+bootRun {
+	environment SPRING_PROFILES_ACTIVE: environment.SPRING_PROFILES_ACTIVE ?: "dev"
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+//			{
+//		exclude module: 'spring-boot-starter-tomcat'
+//	}
+
+	compile('org.mybatis:mybatis:3.4.2')
+	compile('org.mybatis:mybatis-spring:1.3.1')
+	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.0'
+	compile('javax.el:javax.el-api:3.0.0')
+	compile('com.github.pagehelper:pagehelper:4.1.6')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+	//quartz
+	compile('org.quartz-scheduler:quartz:2.3.0')
+	compile('org.springframework:spring-context-support')
+
+	//swagger2
+	compile 'io.springfox:springfox-swagger2:2.7.0'
+	compile 'io.springfox:springfox-swagger-ui:2.7.0'
+
+	compile 'org.apache.commons:commons-lang3:3.7'
+	testCompile 'org.testng:testng:6.9.10'
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+
+	compile files( "lib/db2jcc4.jar", "lib/db2jcc_license_cu.jar")
+
+}
+
+war {
+    baseName = "pricepub_admin"
+    version =  '0.1'
+    dependencies {
+//       providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat:1.5.2.RELEASE'
+        exclude 'javax.servlet:javax.servlet-api:3.1.0'
+    }
+   
+}
