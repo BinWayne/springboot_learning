@@ -45,6 +45,7 @@ dependencies {
 
 	//thymeleaf
 	compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//providedRuntime 'org.springframework.boot:spring-boot-devtools'
 
 }
 
